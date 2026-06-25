@@ -1,0 +1,10 @@
+# Ignore data and weights
+data/
+checkpoints/
+*.pkl
+*.pt
+
+# Ignore python cache and virtual environments
+__pycache__/
+.venv/
+venv/
