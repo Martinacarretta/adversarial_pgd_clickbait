@@ -1,3 +1,10 @@
+'''
+This file implements the PGD attack on the Qwen2-VL model to generate adversarial images that steer the model's output towards a target output defined by a steering vector. 
+The attack is performed by iteratively perturbing the input image while minimizing a loss function that combines semantic and content losses.
+
+'''
+
+
 import torch
 from PIL import Image
 from transformers import AutoProcessor, Qwen2VLForConditionalGeneration
@@ -23,7 +30,6 @@ def put_hook_decaying(model, layer_num, steering_vector, alpha, decay=0.999, max
     def hook(module, input, output):
         hidden_states = output[0]
         
-        # TODO: UNCOMMENT IF WE ONLY WANT TO STEER THE GENERATION PART, NOT THE PROMPT ENCODING PART. CURRENTLY STEERS EVERYTHING.
         # generation is one token at a time, so shape[1] should be 1 during generation.
         # During prompt encoding, shape[1] is the sequence length of the prompt, which is >1
         if hidden_states.shape[1] != 1: # only for generation phase

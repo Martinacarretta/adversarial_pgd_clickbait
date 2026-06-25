@@ -2,7 +2,8 @@
 data/
 checkpoints/
 *.pkl
-*.pt
+*.pt 
+!adversarial_pgd_clickbait/q_inputs/creator_clickbait/steering_clickbait.pt
 
 # Ignore python cache and virtual environments
 __pycache__/
