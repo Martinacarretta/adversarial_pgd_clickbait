@@ -2,8 +2,8 @@ import torch
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-from adversarial_pgd_clickbait.q_2_model import load_model
-from adversarial_pgd_clickbait.q_4_main import run
+from q_2_model import load_model
+from q_4_main import run
 
 def aggregate_and_plot(all_similarities, alphas, layers, output_dir="q_outputs/batch"):
     os.makedirs(f"{output_dir}", exist_ok=True)

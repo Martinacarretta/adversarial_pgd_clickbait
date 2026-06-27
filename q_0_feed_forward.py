@@ -1,8 +1,8 @@
 """
 Give image and prompt and will give generated output
 """
-from adversarial_pgd_clickbait.q_1_steering_vector import create_inputs
-from adversarial_pgd_clickbait.q_2_model import load_model, forward
+from q_1_steering_vector import create_inputs
+from q_2_model import load_model, forward
 from PIL import Image
 import os
 

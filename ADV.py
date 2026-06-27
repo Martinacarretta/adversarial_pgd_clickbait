@@ -4,14 +4,13 @@ The attack is performed by iteratively perturbing the input image while minimizi
 
 '''
 
-
 import torch
 from PIL import Image
 from transformers import AutoProcessor, Qwen2VLForConditionalGeneration
 import torch.nn.functional as F
 import torchvision.transforms as T
 import torchvision.transforms.functional as TF
-from adversarial_pgd_clickbait.q_2_model import forward
+from q_2_model import forward
 import os
 import matplotlib.pyplot as plt
 import textwrap
@@ -236,6 +235,7 @@ def pgd_attack(model, processor, image_pil, prompt,
     output_dir = f"q_z_pgd_{loss_type}"
     os.makedirs(output_dir, exist_ok=True)
     with open(f"{output_dir}/{save_name}_debug.txt", "w") as f:
+        f.write(f"Baseline Output: {baseline_output}\n")
         f.write(f"Target Text: {target_text}\n")
     with open(f"{output_dir}/{save_name}_losses.txt", "w") as f:
         f.write("Alpha: {:.4f}, initial Lam: {:.4f}, final Lam: {:.4f}\n".format(alpha, initial_lam, final_lam))
@@ -349,10 +349,10 @@ def pv_to_image(pv, thw):
     return img.clamp(0, 1)
     
 if __name__ == "__main__":    
-    photo         = "gas" 
+    photo         = "strike" 
     # ALL: abalos, artemisii, dana, gas, olympics_gu, olympics_liu, sanchez, strike, the_weeknd, trump, valldhebron, wildfire, zelenski
     loss_type = "m" # "MSE" "CS"
-    layerr = 14 #7 # 16
+    layerr = 14 #14 7 # 16
     max_tokens = 35
     alpha = 65
     

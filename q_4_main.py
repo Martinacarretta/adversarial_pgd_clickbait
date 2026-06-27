@@ -1,10 +1,10 @@
 from PIL import Image
 import torch
 import transformers
-from adversarial_pgd_clickbait.q_2_model import load_model, forward
-from adversarial_pgd_clickbait.q_1_steering_vector import create_inputs
-from adversarial_pgd_clickbait.q_3_inject import put_hook, know_activations, put_hook_decaying
-from adversarial_pgd_clickbait.q_5_plots import plott
+from q_2_model import load_model, forward
+from q_1_steering_vector import create_inputs
+from q_3_inject import put_hook, know_activations, put_hook_decaying
+from q_5_plots import plott
 import matplotlib.pyplot as plt
 import os
 

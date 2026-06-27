@@ -7,7 +7,7 @@ FILE THAT GETS THE HIDDEN STATES FROM THE MODEL AND COMPUTES THE STEERING VECTOR
 
 import torch
 from PIL import Image
-from adversarial_pgd_clickbait.q_2_model import load_model
+from q_2_model import load_model
 import os
 import pandas as pd
 
