@@ -182,8 +182,8 @@ def decode_output(model, processor, inputs, max_tokens):
  
 def pgd_attack(model, processor, image_pil, prompt,
                mean, std, epsilon=32/255, step_size=4/255, num_steps=200,
-               save_name="adv_image", steering_vector=None, layerr=7,
-               loss_type = "MSE", max_tokens = 25, alpha=None, initial_lam=None, final_lam=None):
+               save_name="adv_image", steering_vector=None, layerr=7, 
+               max_tokens = 25, alpha=None, initial_lam=None, final_lam=None):
  
     print(f"Using layer {layerr} for steering vector.")
     device = model.device
@@ -351,7 +351,6 @@ def pv_to_image(pv, thw):
 if __name__ == "__main__":    
     photo         = "strike" 
     # ALL: abalos, artemisii, dana, gas, olympics_gu, olympics_liu, sanchez, strike, the_weeknd, trump, valldhebron, wildfire, zelenski
-    loss_type = "m" # "MSE" "CS"
     layerr = 14 #14 7 # 16
     max_tokens = 35
     alpha = 65
@@ -379,7 +378,8 @@ if __name__ == "__main__":
     baseline_output, progress = pgd_attack(
         model, processor, image, prompt,
         mean, std,
-        # epsilon=32/255,
+        # epsilon=32/255 = 0.12549019607843137
+        # epsilon=64/255 = 0.24313725490196078
         epsilon=32/255,
         # 2/255
         step_size=1/255,
@@ -387,14 +387,13 @@ if __name__ == "__main__":
         save_name=photo,
         steering_vector=steering_vector, 
         layerr=layerr,
-        loss_type = loss_type,
         max_tokens = max_tokens, 
         alpha=alpha, 
         initial_lam=initial_lam,
         final_lam=final_lam
     )
     
-    dir_mame = f"q_z_pgd_{loss_type}"
+    dir_mame = f"q_z_pgd"
     # Plot loss over iterations with line, no dot, just line
     plt.figure(figsize=(10, 5))
     plt.plot(list(progress.keys()), list(progress.values()), marker='o', markersize=2, linestyle='-')
