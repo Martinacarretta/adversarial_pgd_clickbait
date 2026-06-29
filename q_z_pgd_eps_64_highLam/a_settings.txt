@@ -1,0 +1,8 @@
+layerr = 14 #14 7 # 16
+max_tokens = 35
+alpha = 65
+epsilon = 32/255
+step_size = 1/255
+num_steps = 500
+initial_lam = 3e-2   
+final_lam = 6e-3 

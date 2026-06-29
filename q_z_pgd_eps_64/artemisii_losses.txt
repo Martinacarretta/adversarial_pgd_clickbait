@@ -1,0 +1,56 @@
+Alpha: 65.0000, initial Lam: 0.0100, final Lam: 0.0027
+Step   0 | Total Loss: 0.0000 | Sem Loss: -0.0000 | Con Loss: 0.0000 | Sem Penalty: 0.0000 | Lam: 0.0100
+      Step   0 | Scalar Projection: 0.0000
+Step  10 | Total Loss: 0.0170 | Sem Loss: -0.0013 | Con Loss: 1.6797 | Sem Penalty: 0.0000 | Lam: 0.0099
+Step  20 | Total Loss: 0.0181 | Sem Loss: -0.0014 | Con Loss: 2.0879 | Sem Penalty: 0.0000 | Lam: 0.0097
+Step  30 | Total Loss: 0.0179 | Sem Loss: -0.0027 | Con Loss: 1.8428 | Sem Penalty: 0.0000 | Lam: 0.0096
+Step  40 | Total Loss: 0.0153 | Sem Loss: -0.0030 | Con Loss: 1.7402 | Sem Penalty: 0.0000 | Lam: 0.0094
+Step  50 | Total Loss: 0.0166 | Sem Loss: -0.0032 | Con Loss: 1.9834 | Sem Penalty: 0.0000 | Lam: 0.0093
+Step  60 | Total Loss: 0.0143 | Sem Loss: -0.0046 | Con Loss: 1.6943 | Sem Penalty: 0.0000 | Lam: 0.0091
+Step  70 | Total Loss: 0.0153 | Sem Loss: -0.0024 | Con Loss: 1.7178 | Sem Penalty: 0.0000 | Lam: 0.0090
+Step  80 | Total Loss: 0.0149 | Sem Loss: -0.0029 | Con Loss: 2.0859 | Sem Penalty: 0.0000 | Lam: 0.0088
+Step  90 | Total Loss: 0.0136 | Sem Loss: -0.0042 | Con Loss: 1.9629 | Sem Penalty: 0.0000 | Lam: 0.0087
+Step 100 | Total Loss: 0.0124 | Sem Loss: -0.0053 | Con Loss: 1.7451 | Sem Penalty: 0.0000 | Lam: 0.0085
+      Step 100 | Scalar Projection: 0.3447
+Step 110 | Total Loss: 0.0099 | Sem Loss: -0.0055 | Con Loss: 1.6123 | Sem Penalty: 0.0000 | Lam: 0.0084
+Step 120 | Total Loss: 0.0095 | Sem Loss: -0.0064 | Con Loss: 1.6729 | Sem Penalty: 0.0000 | Lam: 0.0082
+Step 130 | Total Loss: 0.0106 | Sem Loss: -0.0029 | Con Loss: 1.6211 | Sem Penalty: 0.0000 | Lam: 0.0081
+Step 140 | Total Loss: 0.0082 | Sem Loss: -0.0065 | Con Loss: 1.7822 | Sem Penalty: 0.0000 | Lam: 0.0080
+Step 150 | Total Loss: 0.0081 | Sem Loss: -0.0054 | Con Loss: 1.6396 | Sem Penalty: 0.0000 | Lam: 0.0078
+Step 160 | Total Loss: 0.0084 | Sem Loss: -0.0074 | Con Loss: 1.8486 | Sem Penalty: 0.0000 | Lam: 0.0077
+Step 170 | Total Loss: 0.0064 | Sem Loss: -0.0071 | Con Loss: 2.0000 | Sem Penalty: 0.0000 | Lam: 0.0075
+Step 180 | Total Loss: 0.0053 | Sem Loss: -0.0068 | Con Loss: 1.7871 | Sem Penalty: 0.0000 | Lam: 0.0074
+Step 190 | Total Loss: 0.0057 | Sem Loss: -0.0079 | Con Loss: 1.9453 | Sem Penalty: 0.0000 | Lam: 0.0072
+Step 200 | Total Loss: 0.0049 | Sem Loss: -0.0083 | Con Loss: 2.0312 | Sem Penalty: 0.0000 | Lam: 0.0071
+      Step 200 | Scalar Projection: 0.5386
+Step 210 | Total Loss: 0.0033 | Sem Loss: -0.0086 | Con Loss: 1.9043 | Sem Penalty: 0.0000 | Lam: 0.0069
+Step 220 | Total Loss: 0.0034 | Sem Loss: -0.0087 | Con Loss: 1.8047 | Sem Penalty: 0.0000 | Lam: 0.0068
+Step 230 | Total Loss: 0.0020 | Sem Loss: -0.0083 | Con Loss: 1.8496 | Sem Penalty: 0.0000 | Lam: 0.0066
+Step 240 | Total Loss: 0.0031 | Sem Loss: -0.0104 | Con Loss: 2.3984 | Sem Penalty: 0.0000 | Lam: 0.0065
+Step 250 | Total Loss: 0.0013 | Sem Loss: -0.0101 | Con Loss: 2.2168 | Sem Penalty: 0.0000 | Lam: 0.0063
+Step 260 | Total Loss: 0.0011 | Sem Loss: -0.0102 | Con Loss: 2.2441 | Sem Penalty: 0.0000 | Lam: 0.0062
+Step 270 | Total Loss: 0.0008 | Sem Loss: -0.0091 | Con Loss: 2.6016 | Sem Penalty: 0.0000 | Lam: 0.0061
+Step 280 | Total Loss: -0.0011 | Sem Loss: -0.0127 | Con Loss: 2.7520 | Sem Penalty: 0.0000 | Lam: 0.0059
+Step 290 | Total Loss: -0.0018 | Sem Loss: -0.0108 | Con Loss: 2.4102 | Sem Penalty: 0.0000 | Lam: 0.0058
+Step 300 | Total Loss: -0.0016 | Sem Loss: -0.0115 | Con Loss: 2.9082 | Sem Penalty: 0.0000 | Lam: 0.0056
+      Step 300 | Scalar Projection: 0.7495
+Step 310 | Total Loss: -0.0033 | Sem Loss: -0.0135 | Con Loss: 2.6797 | Sem Penalty: 0.0000 | Lam: 0.0055
+Step 320 | Total Loss: -0.0054 | Sem Loss: -0.0143 | Con Loss: 2.8711 | Sem Penalty: 0.0000 | Lam: 0.0053
+Step 330 | Total Loss: -0.0074 | Sem Loss: -0.0189 | Con Loss: 3.5117 | Sem Penalty: 0.0000 | Lam: 0.0052
+Step 340 | Total Loss: -0.0092 | Sem Loss: -0.0204 | Con Loss: 3.9688 | Sem Penalty: 0.0000 | Lam: 0.0050
+Step 350 | Total Loss: -0.0101 | Sem Loss: -0.0208 | Con Loss: 4.0664 | Sem Penalty: 0.0000 | Lam: 0.0049
+Step 360 | Total Loss: -0.0128 | Sem Loss: -0.0270 | Con Loss: 4.8047 | Sem Penalty: 0.0000 | Lam: 0.0047
+Step 370 | Total Loss: -0.0143 | Sem Loss: -0.0275 | Con Loss: 5.0000 | Sem Penalty: 0.0000 | Lam: 0.0046
+Step 380 | Total Loss: -0.0155 | Sem Loss: -0.0262 | Con Loss: 4.9297 | Sem Penalty: 0.0000 | Lam: 0.0045
+Step 390 | Total Loss: -0.0204 | Sem Loss: -0.0389 | Con Loss: 7.0781 | Sem Penalty: 0.0000 | Lam: 0.0043
+Step 400 | Total Loss: -0.0260 | Sem Loss: -0.0464 | Con Loss: 9.0391 | Sem Penalty: 0.0000 | Lam: 0.0042
+      Step 400 | Scalar Projection: 3.0137
+Step 410 | Total Loss: -0.0328 | Sem Loss: -0.0589 | Con Loss: 11.0312 | Sem Penalty: 0.0000 | Lam: 0.0040
+Step 420 | Total Loss: -0.0414 | Sem Loss: -0.0657 | Con Loss: 12.3594 | Sem Penalty: 0.0000 | Lam: 0.0039
+Step 430 | Total Loss: -0.0546 | Sem Loss: -0.0989 | Con Loss: 18.1094 | Sem Penalty: 0.0000 | Lam: 0.0037
+Step 440 | Total Loss: -0.0606 | Sem Loss: -0.0995 | Con Loss: 18.3438 | Sem Penalty: 0.0000 | Lam: 0.0036
+Step 450 | Total Loss: -0.0778 | Sem Loss: -0.1257 | Con Loss: 22.5938 | Sem Penalty: 0.0000 | Lam: 0.0034
+Step 460 | Total Loss: -0.1069 | Sem Loss: -0.1871 | Con Loss: 33.3125 | Sem Penalty: 0.0000 | Lam: 0.0033
+Step 470 | Total Loss: -0.1124 | Sem Loss: -0.1772 | Con Loss: 31.8594 | Sem Penalty: 0.0000 | Lam: 0.0031
+Step 480 | Total Loss: -0.1282 | Sem Loss: -0.2305 | Con Loss: 40.9375 | Sem Penalty: 0.0000 | Lam: 0.0030
+Step 490 | Total Loss: -0.1602 | Sem Loss: -0.2336 | Con Loss: 41.4688 | Sem Penalty: 0.0000 | Lam: 0.0028

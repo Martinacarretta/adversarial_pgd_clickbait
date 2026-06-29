@@ -14,7 +14,7 @@ from q_2_model import forward
 import os
 import matplotlib.pyplot as plt
 import textwrap
-
+import math
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -232,7 +232,7 @@ def pgd_attack(model, processor, image_pil, prompt,
     
     #TODO: DEBUG:
     # create a txt file
-    output_dir = f"q_z_pgd_{loss_type}"
+    output_dir = f"q_z_pgd"
     os.makedirs(output_dir, exist_ok=True)
     with open(f"{output_dir}/{save_name}_debug.txt", "w") as f:
         f.write(f"Baseline Output: {baseline_output}\n")
@@ -243,8 +243,9 @@ def pgd_attack(model, processor, image_pil, prompt,
     for step in range(num_steps): 
         #lambda:
         progress_fraction = step / num_steps
-        lam = initial_lam - (initial_lam - final_lam) * progress_fraction
-        
+        # lam = initial_lam - (initial_lam - final_lam) * progress_fraction
+        lam = final_lam + 0.5 * (initial_lam - final_lam) * (1 + math.cos(math.pi * progress_fraction))
+
         inputs_perturbed = dict(inputs_clean)
         inputs_perturbed["pixel_values"] = pixel_values_orig + delta
 
@@ -311,7 +312,7 @@ def pgd_attack(model, processor, image_pil, prompt,
     
     # TODO: WTFFFFF why doesn't it work?
     # NVM, IT WORKS
-    dir_mame = f"q_z_pgd_{loss_type}"
+    dir_mame = f"q_z_pgd"
     os.makedirs(dir_mame, exist_ok=True)
     torch.save(delta.detach(), f"{dir_mame}/{save_name}_delta.pt")
     torch.save(pixel_values_orig, f"{dir_mame}/{save_name}_pixel_values_orig.pt")
@@ -349,12 +350,17 @@ def pv_to_image(pv, thw):
     return img.clamp(0, 1)
     
 if __name__ == "__main__":    
-    photo         = "strike" 
+    photo         = "zelenski" 
     # ALL: abalos, artemisii, dana, gas, olympics_gu, olympics_liu, sanchez, strike, the_weeknd, trump, valldhebron, wildfire, zelenski
     layerr = 14 #14 7 # 16
     max_tokens = 35
     alpha = 65
-    
+    # epsilon=32/255 = 0.12549019607843137
+    # epsilon=64/255 = 0.24313725490196078
+    epsilon = 32/255
+    step_size = 1/255
+    num_steps = 500
+    print(f" eps: {epsilon}, step_size: {step_size}, num_steps: {num_steps}")
     # lam = 2.7e-3 #0.1/alpha
     initial_lam = 1e-2 
     final_lam = 2.7e-3
@@ -378,12 +384,9 @@ if __name__ == "__main__":
     baseline_output, progress = pgd_attack(
         model, processor, image, prompt,
         mean, std,
-        # epsilon=32/255 = 0.12549019607843137
-        # epsilon=64/255 = 0.24313725490196078
-        epsilon=32/255,
-        # 2/255
-        step_size=1/255,
-        num_steps=500,
+        epsilon=epsilon,
+        step_size=step_size,
+        num_steps=num_steps,
         save_name=photo,
         steering_vector=steering_vector, 
         layerr=layerr,

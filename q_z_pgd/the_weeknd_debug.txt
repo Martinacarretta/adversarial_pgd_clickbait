@@ -1,3 +1,4 @@
+Baseline Output: The Weeknd performs at a live event, showcasing his distinctive style and captivating presence on stage.
 Target Text: The Weeknd Performing at the Super Bowl Halftime Show, 2019
 
 Step   0 | Token 0: GT: 'The' | Pred: ' Week'
@@ -156,18 +157,18 @@ Step 400 | Token 16: GT: '9' | Pred: '<|im_end|>'
 Step 450 | Token 0: GT: 'The' | Pred: ' Week'
 Step 450 | Token 1: GT: ' Week' | Pred: 'nd'
 Step 450 | Token 2: GT: 'nd' | Pred: ' performs'
-Step 450 | Token 3: GT: ' Performing' | Pred: ' at'
+Step 450 | Token 3: GT: ' Performing' | Pred: ' At'
 Step 450 | Token 4: GT: ' at' | Pred: ' the'
 Step 450 | Token 5: GT: ' the' | Pred: ' Super'
 Step 450 | Token 6: GT: ' Super' | Pred: ' Bowl'
 Step 450 | Token 7: GT: ' Bowl' | Pred: ' Hal'
 Step 450 | Token 8: GT: ' Hal' | Pred: 'ftime'
 Step 450 | Token 9: GT: 'ftime' | Pred: ' Show'
-Step 450 | Token 10: GT: ' Show' | Pred: '.'
+Step 450 | Token 10: GT: ' Show' | Pred: '<|im_end|>'
 Step 450 | Token 11: GT: ',' | Pred: ' '
 Step 450 | Token 12: GT: ' ' | Pred: '2'
 Step 450 | Token 13: GT: '2' | Pred: '0'
 Step 450 | Token 14: GT: '0' | Pred: '2'
 Step 450 | Token 15: GT: '1' | Pred: '9'
 Step 450 | Token 16: GT: '9' | Pred: '<|im_end|>'
-Adversarial output: The Weeknd's Super Bowl Halftime Show Was One Of The Best In History, And Here Are 5 Reasons Why It Is So Memorable!
+Adversarial output: The Weeknd performing at the Super Bowl halftime show in 2019, wearing an outfit that looks like he's dressed as a bottle of wine with sequined grapes
