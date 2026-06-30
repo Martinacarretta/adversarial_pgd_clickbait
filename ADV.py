@@ -327,7 +327,7 @@ def pgd_attack(model, processor, image_pil, prompt,
     
     return baseline_output, progress
      
-def pv_to_image(pv, thw):
+def pv_to_image(pv, thw, mean, std):
     # go from pixel values array back to image tensor for visualization
     
     t, h, w = int(thw[0][0]), int(thw[0][1]), int(thw[0][2])
@@ -422,8 +422,8 @@ if __name__ == "__main__":
     delta             = torch.load(f'{output_dir}/{photo}_delta.pt', weights_only=True).cpu()
     thw               = torch.load(f'{output_dir}/{photo}_image_grid_thw.pt', weights_only=True).cpu()
 
-    orig_img = pv_to_image(pixel_values_orig, thw)
-    adv_img  = pv_to_image(pixel_values_orig + delta, thw)
+    orig_img = pv_to_image(pixel_values_orig, thw, mean, std)
+    adv_img  = pv_to_image(pixel_values_orig + delta, thw, mean, std)
 
     TF.to_pil_image(orig_img).save(f"{output_dir}/{photo}_reconstructed.png")
     TF.to_pil_image(adv_img).save(f"{output_dir}/{photo}_adversarial.png")
