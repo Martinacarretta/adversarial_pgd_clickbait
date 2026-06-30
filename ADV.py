@@ -181,12 +181,14 @@ def decode_output(model, processor, inputs, max_tokens):
     return processor.decode(tokens, skip_special_tokens=True)
  
 def pgd_attack(model, processor, image_pil, prompt,
-               mean, std, epsilon=32/255, step_size=4/255, num_steps=200,
-               save_name="adv_image", steering_vector=None, layerr=7, 
-               max_tokens = 25, alpha=None, initial_lam=None, final_lam=None, 
-               output_dir=None, decay=None):
+               mean, std, 
+               step_size=1/255, num_steps=500,
+               steering_vector=None, 
+               max_tokens = 25, layerr=7, alpha=None, 
+               epsilon=32/255,
+               initial_lam=None, final_lam=None, decay=None,
+               output_dir=None, save_name= None):
  
-    print(f"Using layer {layerr} for steering vector.")
     device = model.device
  
     # original image as float tensor (C, H, W) in [0, 1]
@@ -356,7 +358,17 @@ def pv_to_image(pv, thw):
 if __name__ == "__main__":    
     photo         = "gas" 
     # ALL: abalos, artemisii, dana, gas, olympics_gu, olympics_liu, sanchez, strike, the_weeknd, trump, valldhebron, wildfire, zelenski
-    layerr = 14
+    image_path    = f"q_inputs/images/{photo}.jpg"
+    output_dir      = f"q_pgd" # for output
+    prompt        = "Draft a short factual lede for a news report based on this scene."
+
+    steering_vector_path = f"q_inputs/creator_clickbait/steering_clickbait.pt"
+    if not os.path.exists(steering_vector_path):
+        raise FileNotFoundError(f"steering_clickbait.pt not found. Generate it first.")
+    steering_vector = torch.load(steering_vector_path, weights_only=True)
+    print("❇️ Steering vector loaded.\n")
+    
+    layer = 14
     max_tokens = 35
     alpha = 65
     
@@ -369,39 +381,28 @@ if __name__ == "__main__":
     final_lam = 2.7e-3
     decay = "linear" # "cosine" or "linear" or None
     print(f"Using alpha: {alpha}, initial_lam: {initial_lam}, final_lam: {final_lam}")
-    
-    image_path    = f"q_inputs/images/{photo}.jpg"
-    prompt        = "Draft a short factual lede for a news report based on this scene."
- 
+     
     model, processor = load_model()
     image = Image.open(image_path).convert("RGB")
 
     mean = torch.tensor([0.48145466, 0.4578275,  0.40821073])
     std  = torch.tensor([0.26862954, 0.26130258, 0.27577711])
-
-    steering_vector_path = f"q_inputs/creator_clickbait/steering_clickbait.pt"
-    if not os.path.exists(steering_vector_path):
-        raise FileNotFoundError(f"steering_clickbait.pt not found. Generate it first.")
-    steering_vector = torch.load(steering_vector_path, weights_only=True)
-    print("❇️ Steering vector loaded.\n")
-
-    dir_mame = f"q_pgd__"
-    
+                   
     baseline_output, progress = pgd_attack(
         model, processor, image, prompt,
         mean, std,
-        epsilon=epsilon,
-        step_size=step_size,
-        num_steps=num_steps,
-        save_name=photo,
-        steering_vector=steering_vector, 
-        layerr=layerr,
+        step_size = step_size, 
+        num_steps = num_steps,
+        steering_vector = steering_vector,
         max_tokens = max_tokens, 
-        alpha=alpha, 
-        initial_lam=initial_lam,
-        final_lam=final_lam, 
-        output_dir= dir_mame,
+        layerr = layer,
+        alpha = alpha, 
+        epsilon = epsilon,
+        initial_lam = initial_lam,
+        final_lam = final_lam, 
         decay = decay
+        output_dir = output_dir,
+        save_name = photo
     )
     
     # Plot loss over iterations with line, no dot, just line
@@ -413,24 +414,24 @@ if __name__ == "__main__":
     plt.xlabel('Step')
     plt.ylabel('Loss')
     plt.grid()
-    plt.savefig(f'{dir_mame}/{photo}_pgd_progress.png')
+    plt.savefig(f'{output_dir}/{photo}_pgd_progress.png')
     
     ####################### RECONSTRUCTION ################################    
     
-    pixel_values_orig = torch.load(f'{dir_mame}/{photo}_pixel_values_orig.pt', weights_only=True).cpu()
-    delta             = torch.load(f'{dir_mame}/{photo}_delta.pt', weights_only=True).cpu()
-    thw               = torch.load(f'{dir_mame}/{photo}_image_grid_thw.pt', weights_only=True).cpu()
+    pixel_values_orig = torch.load(f'{output_dir}/{photo}_pixel_values_orig.pt', weights_only=True).cpu()
+    delta             = torch.load(f'{output_dir}/{photo}_delta.pt', weights_only=True).cpu()
+    thw               = torch.load(f'{output_dir}/{photo}_image_grid_thw.pt', weights_only=True).cpu()
 
     orig_img = pv_to_image(pixel_values_orig, thw)
     adv_img  = pv_to_image(pixel_values_orig + delta, thw)
 
-    TF.to_pil_image(orig_img).save(f"{dir_mame}/{photo}_reconstructed.png")
-    TF.to_pil_image(adv_img).save(f"{dir_mame}/{photo}_adversarial.png")
-    print(f"Saved {dir_mame}/{photo}_reconstructed.png and {dir_mame}/{photo}_adversarial.png")
+    TF.to_pil_image(orig_img).save(f"{output_dir}/{photo}_reconstructed.png")
+    TF.to_pil_image(adv_img).save(f"{output_dir}/{photo}_adversarial.png")
+    print(f"Saved {output_dir}/{photo}_reconstructed.png and {output_dir}/{photo}_adversarial.png")
     
     ####################### COMPARISON ################################
 
-    path = os.path.join(dir_mame, f"{photo}_adversarial.png")
+    path = os.path.join(output_dir, f"{photo}_adversarial.png")
     image = Image.open(path).convert("RGB")
 
     model_inputs = create_inputs(model, processor, image, prompt)
@@ -438,7 +439,7 @@ if __name__ == "__main__":
 
     print(f"❇️ Adversarial output: {adv_output}")
     
-    with open(f"{dir_mame}/{photo}_debug.txt", "a") as f:
+    with open(f"{output_dir}/{photo}_debug.txt", "a") as f:
         f.write(f"\nAdversarial output: {adv_output}\n")
     
     # save an image with 2 subimages side by side for easier comparison WITH the output 
@@ -466,5 +467,5 @@ if __name__ == "__main__":
     fig.text(0.02, 0.01, wrapped_baseline, fontsize=9, verticalalignment='bottom')
     fig.text(0.52, 0.01, wrapped_adv, fontsize=9, verticalalignment='bottom')
     plt.tight_layout()
-    plt.savefig(f'{dir_mame}/{photo}_comparison.png', bbox_inches='tight')
+    plt.savefig(f'{output_dir}/{photo}_comparison.png', bbox_inches='tight')
     plt.close()
