@@ -85,15 +85,6 @@ def main():
  
     steering_direction = "clickbait" #"dog" #formal #TODO: CHANGE IF NECESSARY
     prompt = 'Draft a short factual lede for a news report based on this scene'
-    #'Update me on this news in a sentence'
-    # Give me a super short lede for this news #short lede
-    # Draft a short factual lede for a news report based on this scene 
-    # Summarize this news
-    # Write a newspaper headline for this image
-    
-    # default: Describe this image
-    # whole is describe but with all the alphas
-    # TODO: CHANGE IF NECESSARY 
     
     multiple = False #True #TODO: CHANGE IF NECESSARY
     decay = 1 #0.97 #0.999 #TODO: CHANGE IF NECESSARY 
