@@ -100,7 +100,7 @@ def create_inputs(model, processor, image, user_prompt): # for main.py
 
 def teacher_forced_loss(model, processor, inputs, target_text,
                         steering_vector = None, 
-                        h_clean = None, alpha=None, lam=None, layerr=16):
+                        h_clean = None, alpha=None, lam=None, layer=16):
     device = model.device
                 
     # prompt_ids are the token ids for the input prompt (including image tokens and text tokens)
@@ -115,7 +115,7 @@ def teacher_forced_loss(model, processor, inputs, target_text,
     hidden_states = {}
     def hook_fn(module, input, output):
         hidden_states['value'] = output[0]
-    hook = model.model.layers[layerr].register_forward_hook(hook_fn)
+    hook = model.model.layers[layer].register_forward_hook(hook_fn)
 
     output = model(
         input_ids=full_ids,
@@ -134,7 +134,7 @@ def teacher_forced_loss(model, processor, inputs, target_text,
     T_target = target_ids.shape[1]
     
     h_target = hidden_states['value'][0, T_prompt:T_prompt + T_target, :]  # (T_target, D)
-    sv = steering_vector[layerr].to(device).to(h_target.dtype)
+    sv = steering_vector[layer].to(device).to(h_target.dtype)
     # v = steering vector direction
     # h_clean = clean hidden state
     
@@ -184,7 +184,7 @@ def pgd_attack(model, processor, image_pil, prompt,
                mean, std, 
                step_size=1/255, num_steps=500,
                steering_vector=None, 
-               max_tokens = 25, layerr=7, alpha=None, 
+               max_tokens = 25, layer=7, alpha=None, 
                epsilon=32/255,
                initial_lam=None, final_lam=None, decay=None,
                output_dir=None, save_name= None):
@@ -200,7 +200,7 @@ def pgd_attack(model, processor, image_pil, prompt,
     baseline_output = decode_output(model, processor, inputs_clean, max_tokens)
     print(f"❇️ Baseline output: {baseline_output}\n")
  
-    target_text = steer(image_pil, model, processor, steering_vector, prompt, layer = layerr, alpha=alpha)
+    target_text = steer(image_pil, model, processor, steering_vector, prompt, layer = layer, alpha=alpha)
     print(f"❇️ Target output: {target_text}\n")
     
     target_ids = processor.tokenizer(target_text, return_tensors="pt", add_special_tokens=False).input_ids.to(device)
@@ -217,7 +217,7 @@ def pgd_attack(model, processor, image_pil, prompt,
     hidden_clean = {}
     def hook_clean(module, input, output):
         hidden_clean['value'] = output[0]
-    h_hook = model.model.layers[layerr].register_forward_hook(hook_clean)
+    h_hook = model.model.layers[layer].register_forward_hook(hook_clean)
     
     with torch.no_grad():
         model(
@@ -248,7 +248,7 @@ def pgd_attack(model, processor, image_pil, prompt,
         
         if decay == "linear":
             lam = initial_lam - (initial_lam - final_lam) * progress_fraction
-        if decay == "cosine":
+        elif decay == "cosine":
             lam = final_lam + 0.5 * (initial_lam - final_lam) * (1 + math.cos(math.pi * progress_fraction))
         else:
             lam = initial_lam # no decay
@@ -260,7 +260,7 @@ def pgd_attack(model, processor, image_pil, prompt,
         model.zero_grad() # clear previous gradients
         # teacher-forced loss compares model's predicted token probabilities to 
         # the target answer tokens, given the perturbed image and prompt
-        loss, loss_sem, loss_sem_penalty, loss_con, lam, scalar_pro, full_ids, output_ids = teacher_forced_loss(model, processor, inputs_perturbed, target_text, steering_vector, h_clean_target, alpha, lam, layerr=layerr)
+        loss, loss_sem, loss_sem_penalty, loss_con, lam, scalar_pro, full_ids, output_ids = teacher_forced_loss(model, processor, inputs_perturbed, target_text, steering_vector, h_clean_target, alpha, lam, layer=layer)
         
         if step % 10 == 0:
             print(f"     Step {step:3d} | Total Loss: {loss.item():.4f} | Sem Loss: {loss_sem.item():.4f} | Con Loss: {loss_con.item():.4f} | Sem Penalty: {loss_sem_penalty.item():.4f} | Lam: {lam:.4f}")
@@ -395,12 +395,12 @@ if __name__ == "__main__":
         num_steps = num_steps,
         steering_vector = steering_vector,
         max_tokens = max_tokens, 
-        layerr = layer,
+        layer = layer,
         alpha = alpha, 
         epsilon = epsilon,
         initial_lam = initial_lam,
         final_lam = final_lam, 
-        decay = decay
+        decay = decay,
         output_dir = output_dir,
         save_name = photo
     )

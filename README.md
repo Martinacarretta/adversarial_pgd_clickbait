@@ -97,6 +97,8 @@ The resulting caption (already clickbait-styled because of the hook) becomes the
 
 All experiments use the `teacher_forced_loss` decomposition above: a semantic loss (pushing the hidden state along the clickbait steering direction) and a content loss (penalizing drift orthogonal to that direction), combined as `loss_sem + sem_penalty + lambda * loss_con`. Unless stated otherwise, the baseline configuration is `epsilon = 32/255`, a linearly decaying `lambda` from `1e-2` to `2.7e-3`, and 500 PGD steps.
 
+*Note*: Images below are just examples of the results mentioned in each section. Most of the rest of the images are in the corresponding folder
+
 ### 1. Increasing the perturbation budget (epsilon)
 
 **Setup:** compared `epsilon = 32/255` (baseline) against `epsilon = 64/255`, keeping lambda schedule, steps, and everything else fixed.
